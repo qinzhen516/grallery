@@ -1,4 +1,13 @@
 /* Base Application Styles */
+@font-face {
+  font-family: 'iconfont';
+  src: url('../fonts/icon/iconfont.eot');
+  src: url('../fonts/icon/iconfont.eot?#iefix') format('embedded-opentype'),
+  url('../fonts/icon/iconfont.woff') format('woff'),
+  url('../fonts/icon/iconfont.ttf') format('truetype'),
+  url('../fonts/icon/iconfont.svg#iconfont') format('svg');
+}
+
 html,body{
   background-color: #222222;
   width: 100%;
@@ -95,4 +104,48 @@ html,body{
   width: 100%;
 
   text-align: center;
+
+  @at-root{
+    .unit{
+      display: inline-block;
+      width: 30px;
+      height: 30px;
+      margin: 0 5px;
+      text-align: center;
+      cursor: pointer;
+      background-color: #aaa;
+      border-radius: 50%;
+
+      vertical-align: middle;
+
+      transform: scale(.5);
+      transition:transform .6s ease-in-out, background-color .3s;
+
+
+      &.is-center{
+        transform: scale(1);
+        background-color: #888;
+
+        &::after{
+          color: #fff;
+          font-family: "icon-font";
+          //对应iconfont的unicode编码值
+          content: "\e650";
+
+          line-height: 30px;
+
+          //开启灰阶渲染
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing:grayscale;
+        }
+
+        &.is-inverse{
+          background-color: #555;
+
+
+          transform: rotateY(180deg);
+        }
+      }
+    }
+  }
 }

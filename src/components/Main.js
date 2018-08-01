@@ -63,8 +63,8 @@ class ImgFigure extends React.Component{
 
     //如果图片的选择角度有值且不为0，添加选择角度
     if(this.props.arrange.rotate){
-      (['-moz-','-ms-','-webkit-','']).forEach(function(value){
-           styleObj[value + 'transform'] = 'rotate('+this.props.arrange.rotate+'deg)';
+      (['MozTransform','msTransform','WebkitTransform','transform']).forEach(function(value){
+           styleObj[value] = 'rotate('+this.props.arrange.rotate+'deg)';
       }.bind(this));
 
     }
@@ -90,6 +90,42 @@ class ImgFigure extends React.Component{
     );
   }
 
+}
+
+//控制组件
+class ControllerUnit extends React.Component{
+  constructor(){
+    super();
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick(e){
+    e.preventDefault();
+    e.stopPropagation();
+
+    //如果点击的是当前选中的则翻转，否则居中
+    if(this.props.arrange.isCenter){
+      this.props.inverse();
+    }else{
+      this.props.center();
+    }
+  }
+
+
+  render(){
+
+    let unitClassName = 'unit';
+    if(this.props.arrange.isCenter){
+      unitClassName += ' is-center';
+
+      if(this.props.arrange.isInverse){
+        unitClassName += ' is-inverse';
+      }
+    }
+    return(
+      <span className={unitClassName} onClick={this.handleClick}></span>
+    )
+  }
 }
 
 class AppComponent extends React.Component {
@@ -157,7 +193,7 @@ inverse(index){
 
           //上部的图片取一个或者不取
           imgsArrangeTopArr = [],
-          topImgNum = Math.ceil(Math.random() *2),
+          topImgNum = Math.floor(Math.random() *2),
 
           topImgSpliceIndex = 0,
           imgsArrangeCenterArr = imgsArrangeArr.splice(centerIndex,1);
@@ -291,6 +327,8 @@ inverse(index){
           };
         }
           ImgFigures.push(<ImgFigure data={value} ref={'imgFigure'+index} arrange={this.state.imgsArrangeArr[index]} key={index} inverse = {this.inverse(index)} center={this.center(index)}/>);
+
+          controllerUnits.push(<ControllerUnit arrange={this.state.imgsArrangeArr[index]} inverse={this.inverse(index)} center={this.center(index)} key={index}/>);
         });
 
     return (
