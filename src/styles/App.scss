@@ -4,6 +4,8 @@ html,body{
   width: 100%;
   height: 100%;
 }
+
+
 .content{
   width: 100%;
   height: 100%;
@@ -14,17 +16,77 @@ html,body{
   position: relative;
   width: 100%;
   height: 680px;
+  overflow: hidden;
 }
-
+// ////////////////////////////////
 .img-sec{
   position: relative;
   width: 100%;
   height: 100%;
   overflow: hidden;
-
+  perspective: 1800px;
   background-color: #ddd;
-}
 
+  //提升层级，增强可移植性
+  @at-root{
+    .img-figure{
+      width: 320px;
+      height: 360px;
+      margin: 0;
+      padding: 40px;
+      background-color: #fff;
+      //定位
+      position: absolute;
+
+      box-sizing: border-box;  //width的值包含padding
+      cursor: pointer;
+      transform-style: preserve-3d;
+      transform-origin: 0 50% 0;
+      background-color: #fff;
+      transform-style: preserve-3d;
+      transition:transform .6s ease-in-out ,left .6s ease-in-out, top .6s ease-in-out;
+      &.is-inverse{
+        transform: translate(320px) rotateY(180deg);
+      }
+
+    }
+
+      figcaption{
+        text-align: center;
+
+        .img_title{
+          margin: 20px 0 0 0;
+          color: #a7a0a2;
+          font-size: 16px;
+        }
+
+        .img-back{
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 100%;
+          padding: 50px 40px;
+          overflow: auto;
+          color:#a7a0a2;
+          font-size: 22px;
+          line-height: 1.25;
+          text-align: left;
+          background-color: #fff;
+          box-sizing: border-box;
+          transform: rotateY(180deg);
+          backface-visibility: hidden;
+
+          p{
+              margin: 0;
+            }
+        }
+
+      }
+  }
+
+}
+// ///////////////////////////
 .controller-nav{
   position: absolute;
   left: 0;
